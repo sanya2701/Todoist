@@ -5,7 +5,11 @@ const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-acce
 const mongoose = require("mongoose");
 const session = require('express-session');
 const flash = require("connect-flash");
+const passport = require("passport");
 const app = express();
+
+//Passport config
+require('./config/passport')(passport);
 
 //connect DB
 const dbc = require("./config/keys"); 
@@ -35,7 +39,11 @@ app.use(session({
     saveUninitialized: true,
   }));
 
-  //connect flash
+//Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+//connect flash
 app.use(flash());
 
 //global vars
