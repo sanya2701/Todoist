@@ -8,6 +8,8 @@ const session = require('express-session');
 const flash = require("connect-flash");
 const passport = require("passport");
 const app = express();
+require('dotenv').config()
+
 
 //method override for put and delete requests
 app.use(methodOverride('_method'))
@@ -16,8 +18,8 @@ app.use(methodOverride('_method'))
 require('./config/passport')(passport);
 
 //connect DB
-const dbc = require("./config/keys"); 
-mongoose.connect(dbc || "mongodb://localhost:27017/mydb" , {useNewUrlParser: true, useUnifiedTopology: true },
+const MONGODB_URI = require("./config/keys"); 
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/mydb" , {useNewUrlParser: true, useUnifiedTopology: true },
     ()=>{console.log("Database Connected")});
 
 //Connect DB models
@@ -64,4 +66,4 @@ app.use((req,res,next)=>{
 app.use("/",require("./routes/index"));
 app.use("/users",require("./routes/users"));
 
-app.listen(3000, () => console.log("Server Started"))
+app.listen(process.env.PORT || 3000, () => console.log("Server Started"))
