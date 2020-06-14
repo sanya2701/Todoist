@@ -2,14 +2,14 @@
 <br/><br/><br/><br/><br/>
 
 <div class="d-flex justify-content-center ">
-<div class="card mb-3">
-  <h3 class="card-header">My To-Do List</h3>
+<div class="card bg-success mb-3">
+  <h3 class="card-header"><b><i>{{username}}'s&nbsp; To-Do</i></b></h3>
   <div class="card-body">
     {{> messages}}
     <p class="card-text">
     <form class="form-inline my-2 my-lg-0" method="POST" href="/mytodo">
       <input class="form-control mr-sm-2" type="text" name="tname" placeholder="New Task" required>
-      <button class="btn btn-secondary my-2 my-sm-0" type="submit">Add task</button>
+      <button class="btn btn-primary my-2 my-sm-0" type="submit">Add task</button>
     </form>    
     </p>
   </div>

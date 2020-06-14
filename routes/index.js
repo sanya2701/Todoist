@@ -4,18 +4,22 @@ const Todo = require("../models/Todo")
 const router = express.Router();
 
 router.get("/",(req,res)=>{
-    let uid;
-    if(req.user) uid = req.user._id;
-    else uid=NULL;
-    res.render("index",{uid});
+    let uid,uname;
+    if(req.user) {
+        uid = req.user._id;
+        uname = req.user.name;
+    }
+    else uid= null;
+    res.render("index",{uid,uname});
 });
 
 router.get("/mytodo",ensureAuthenticated,(req,res)=>{
     const userID = req.user._id;
+    const username = req.user.name;
     Todo.find({user:userID},(err,todos)=>{
         if(err) console.log(err);
         else{
-            res.render("main",{todos:todos.map(todo=>todo.toJSON())});
+            res.render("main",{todos:todos.map(todo=>todo.toJSON()),username});
         }
     })
 })
