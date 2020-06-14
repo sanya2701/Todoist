@@ -4,7 +4,10 @@ const Todo = require("../models/Todo")
 const router = express.Router();
 
 router.get("/",(req,res)=>{
-    res.render("index");
+    let uid;
+    if(req.user) uid = req.user._id;
+    else uid=NULL;
+    res.render("index",{uid});
 });
 
 router.get("/mytodo",ensureAuthenticated,(req,res)=>{
