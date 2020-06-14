@@ -1,12 +1,16 @@
 const express = require("express");
-const handlebars = require('express-handlebars');
+const methodOverride = require('method-override')
 const Handlebars = require('handlebars');
+const exphbs = require('express-handlebars');
 const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access');
 const mongoose = require("mongoose");
 const session = require('express-session');
 const flash = require("connect-flash");
 const passport = require("passport");
 const app = express();
+
+//method override for put and delete requests
+app.use(methodOverride('_method'))
 
 //Passport config
 require('./config/passport')(passport);
@@ -18,15 +22,17 @@ mongoose.connect(dbc || "mongodb://localhost:27017/mydb" , {useNewUrlParser: tru
 
 //Connect DB models
 const User = require("./models/User");
+const Todo = require("./models/Todo");
 
 //Views
-app.set('view engine', 'hbs');
-app.engine('hbs', handlebars({
+app.engine('hbs', exphbs({
     hbs: allowInsecurePrototypeAccess(Handlebars),
     layoutsDir: __dirname + '/views/layouts',
     extname: 'hbs',
     defaultLayout: 'index'
 }));
+app.set('view engine', 'hbs');
+
 
 //body parser
 app.use(express.json());

@@ -1,24 +1,29 @@
-{{> navbar}}
+{{> navbar2}}
 <br/><br/><br/><br/><br/>
 
 <div class="d-flex justify-content-center ">
 <div class="card mb-3">
-  <h3 class="card-header">To-Do List</h3>
+  <h3 class="card-header">My To-Do List</h3>
   <div class="card-body">
+    {{> messages}}
     <p class="card-text">
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="text" placeholder="New Task">
+    <form class="form-inline my-2 my-lg-0" method="POST" href="/mytodo">
+      <input class="form-control mr-sm-2" type="text" name="tname" placeholder="New Task" required>
       <button class="btn btn-secondary my-2 my-sm-0" type="submit">Add task</button>
     </form>    
     </p>
   </div>
   <ul class="list-group list-group-flush">
+    {{#if todos}}
+    {{#each todos}}
     <li class="list-group-item">
-        Eat
-        <a href="#"><i class="fas fa-trash" style="float: right;"></i></a>
+        {{this.tname}}
+        <a href="/{{this._id}}/deltodo">
+          <i class="fas fa-trash" style="float: right;"></i>
+        </a>
     </li>
-    <li class="list-group-item">Sleep</li>
-    <li class="list-group-item">Repeat</li>
+    {{/each }}
+    {{/if}}
   </ul>
 </div>
 </div>
